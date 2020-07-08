@@ -17,15 +17,17 @@ let pincet = {
     },
 
       PopupButtonHandler() {
+        $('.popup-form_btn span').text($('input[name="radio"]:checked').parent().next().text());
+
         $('.popup-form_btn').on('click', () => {
           $('.popup-form_list').slideToggle().toggleClass('open');
         });
-  
-        $('.popup-form_list-item').on('click', () => {
-          let self = $(this),
-              text = self.children('span').text();
-  
-          $('.popup-form_btn > span').text(text);
+
+        $('.popup-form_list-item').on('click', (e) => {
+          if (!$(e.target).is('label')) {
+            $('.popup-form_btn span').text($(e.target).parent().next('span').text())
+            $('.popup-form_list').slideUp().removeClass('open');
+          }
         });
       },
       HamburgerHandler() {
@@ -53,10 +55,10 @@ let pincet = {
               text = self.children('a').text();
               $('.head__menu > .container ul > li > a').text(text);
           })
-          
+
         }
       }
-    
+
 }.init();
 
 $(function() {
